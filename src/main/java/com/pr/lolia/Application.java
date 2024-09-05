@@ -1,5 +1,6 @@
 package com.pr.lolia;
 
+import com.pr.lolia.application.AskChampionsUseCase;
 import com.pr.lolia.application.ListChampionsUseCase;
 import com.pr.lolia.domain.ports.ChampionsRepository;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,11 @@ public class Application {
 	@Bean
 	public ListChampionsUseCase provideListChampionsUseCase(ChampionsRepository championsRepository){
 		return new ListChampionsUseCase(championsRepository);
+	}
+
+	@Bean
+	public AskChampionsUseCase provideAksChampionUseCase(ChampionsRepository championsRepository){
+		return new AskChampionsUseCase(championsRepository);
 	}
 
 }
