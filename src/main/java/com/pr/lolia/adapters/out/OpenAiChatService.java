@@ -1,12 +1,16 @@
 package com.pr.lolia.adapters.out;
 
 import com.pr.lolia.domain.ports.GenerativeAiService;
+import feign.RequestInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "OpenAiChatApi", url = "${openai.base-url}")
+@FeignClient(name = "OpenAiChatApi", url = "${openai.base-url}", configuration = OpenAiChatService.Config.class)
 public interface OpenAiChatService extends GenerativeAiService {
 
     @PostMapping("/v1/chat/completions")
@@ -30,5 +34,12 @@ public interface OpenAiChatService extends GenerativeAiService {
 
     record OpenAiChatCompletionResp(List<Choice> choices){}
     record Choice(Message message) {}
+
+    class Config {
+        @Bean
+        public RequestInterceptor apiKeyRequestInterceptor(@Value("${open.api-key}") String apiKey) {
+            return requestTemplate -> requestTemplate.header(HttpHeaders.AUTHORIZATION, "Bearer %s".formatted(apiKey));
+        }
+    }
 
 }
