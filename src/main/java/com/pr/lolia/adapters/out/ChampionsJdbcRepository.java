@@ -1,7 +1,7 @@
 package com.pr.lolia.adapters.out;
 
-import com.pr.lolia.domain.model.Champion;
 import com.pr.lolia.domain.ports.ChampionsRepository;
+import com.pr.lolia.domain.model.Champion;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
